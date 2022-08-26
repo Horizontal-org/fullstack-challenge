@@ -19,3 +19,5 @@ The project needs to have the following features
 - it's not necesary to deploy this somewhere, with creating a pull request with your implementation it's fine
 
 - there is no need to do a pagination/lazy load implemenation for the search results, showing the first hits it's okey
+
+- In case you can't do it in time it's okey, you can write an explanation of you would have done it 
