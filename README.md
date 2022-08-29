@@ -14,7 +14,7 @@ The project needs to have the following features
 
 - Users should have the option to "save" an image, which *downloads* it to the backend. The files should be stored at a ./data folder. There is already a file entity created on the backend but feel free to change it to your convenience
 
-- Users should be able to see the images they downloaded on the frontend.
+- Users should be able to see all of the images they downloaded on the frontend.
 
 - The design can be basic, but it needs to be mobile friendly
 
@@ -23,6 +23,6 @@ The project needs to have the following features
 
 - There is no need to deploy this. Creating a pull request with your implementation is enough.
 
-- There is no need to do a pagination/lazy load implementation for the search results. Showing the first hits is enough.
+- There is no need to do a pagination/lazy load implementation for the search results. Showing the first 25 results is enough.
 
 - If you aren't aable to complete it all on time, please write an explanation of what is missing and how would have done it 
