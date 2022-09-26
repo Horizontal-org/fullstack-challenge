@@ -26,3 +26,10 @@ The project needs to have the following features
 - There is no need to do a pagination/lazy load implementation for the search results. Showing the first 25 results is enough.
 
 - If you aren't aable to complete it all on time, please write an explanation of what is missing and how would have done it 
+
+## Submit your assessment
+To submit your PR:
+1. Fork this repo
+2. Submit your PR
+3. Make sure your repo is public
+4. Send us the link to the PR on your repo
