@@ -16,12 +16,6 @@ const Home = () => {
   const [searchKey, setSearchKey] = React.useState('apollo 11');
   const { data, loading } = useApiReducer(`https://images-api.nasa.gov/search?q=${searchKey}`);
 
-  React.useEffect(() => {
-    const params = new URLSearchParams();
-    params.append('q', searchKey);
-    // history.({ search: params.toString() });
-  }, [data, searchKey, history]);
-
   const debouncedSearch = React.useCallback(
     debounce((text) => {
       setSearchKey(text);
@@ -59,6 +53,7 @@ const Home = () => {
 
             {data?.collection?.items &&
               data?.collection?.items
+                .slice(0, 25)
                 .filter((item) => {
                   return Array.isArray(item.links) && item?.links?.length === 2;
                 })
@@ -66,7 +61,7 @@ const Home = () => {
                   <Col tabIndex={item?.id + 1} key={item?.id} xs={22} sm={22} md={22} lg={22} xl={22} xxl={5}>
                     <UserDetailLink
                       onClick={async () => {
-                        await fetch('http://localhost:4000', {
+                        await fetch('http://localhost:4000/file', {
                           method: 'POST',
 
                           body: JSON.stringify({
