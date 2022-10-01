@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  frontend:
+    tty: true
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    working_dir: $PWD
+    extra_hosts:
+      - 'host.docker.internal:172.17.0.1'
+    privileged: true
+    volumes:
+      - ../:/home/node/app:cached
+    environment:
+      NODE_ENV: development
+    links:
+      - backend
+    depends_on:
+      - backend
+  backend:
+    tty: true
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    working_dir: $PWD
+    extra_hosts:
+      - 'host.docker.internal:172.17.0.1'
+    privileged: true
+    volumes:
+      - ../:/home/node/app:cached
+    environment:
+      NODE_ENV: development
+
+
+
