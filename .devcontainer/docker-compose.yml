@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   frontend:
@@ -7,13 +7,13 @@ services:
       context: ./
       dockerfile: ./Dockerfile
     working_dir: $PWD
-    extra_hosts:
-      - 'host.docker.internal:172.17.0.1'
     privileged: true
     volumes:
       - ../:/home/node/app:cached
     environment:
       NODE_ENV: development
+    ports:
+      - "3000:3000"
     links:
       - backend
     depends_on:
@@ -25,12 +25,9 @@ services:
       dockerfile: ./Dockerfile
     working_dir: $PWD
     extra_hosts:
-      - 'host.docker.internal:172.17.0.1'
+      - "host.docker.internal:172.17.0.1"
     privileged: true
     volumes:
       - ../:/home/node/app:cached
     environment:
       NODE_ENV: development
-
-
-

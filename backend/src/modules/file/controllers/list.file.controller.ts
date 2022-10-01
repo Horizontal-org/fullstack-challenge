@@ -20,4 +20,11 @@ export class ListFileController {
     
     return users.map((user) => plainToClass(ReadFileDto, user))
   }
+
+  @Post()
+  async create() {
+    const users = await this.fileRepository.create()
+    
+    return users
+  }
 }
