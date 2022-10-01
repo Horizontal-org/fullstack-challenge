@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, ParseIntPipe, Query } from '@nestjs/common';
+import { Controller, Get,Post, Body, Inject, ParseIntPipe, Query } from '@nestjs/common';
 
 import { ReadFileDto } from '../dto/read.file.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -19,5 +19,14 @@ export class ListFileController {
     const users = await this.fileRepository.find(); 
     
     return users.map((user) => plainToClass(ReadFileDto, user))
+  }
+
+  @Post()
+  async create(@Body() body: FileEntity) {
+    const users = await this.fileRepository.create()
+    
+    // TODO Download the URL path and save it in Disk 
+    
+    return body
   }
 }

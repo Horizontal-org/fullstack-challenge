@@ -1,24 +1,33 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Home from './container/Home'
+import Col from './component/Col/index.style'
+import Row from './component/Row/index.style'
+import {
+  createBrowserRouter,
+  RouterProvider,
+
+} from "react-router-dom";
+
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+    errElement:
+      <Row justify="center">
+        <Col xs={22} sm={22} md={8} lg={8} xl={6} xxl={5}>
+          Not Founds
+        </Col>
+      </Row>
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={router} />
+    
   );
 }
 
