@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Search, Button, ImageCard } from "../src/components";
+import { Search, Button, SearchResults, Downloads } from "../src/components";
 import "./App.css";
 
 function App() {
   const [images, setImages] = useState([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
+  const [downloads, setDownloads] = useState(false);
 
   async function handleSearch() {
     setLoading(true);
@@ -15,10 +16,21 @@ function App() {
     const data = await response.json();
     setImages(data.collection.items.slice(0, 25));
     setQuery("");
+    setDownloads(false);
+    setLoading(false);
+  }
+
+  async function handleDownloads() {
+    setLoading(true);
+    const response = await fetch(`http://localhost:9000/file`);
+    const data = await response.json();
+    setDownloads(true);
+    setImages(data.slice(0, 25));
     setLoading(false);
   }
 
   useEffect(() => {
+    setLoading(true);
     async function fetchNasaImages() {
       const response = await fetch(
         `https://images-api.nasa.gov/search?q=space&description=moon&media_type=image`
@@ -43,30 +55,48 @@ function App() {
         </div>
         <div className="w-full mt-2 lg:w-3/12 lg:ml-4 lg:mt-0">
           <Button onClick={handleSearch}>
-            {loading ? <span>Loading...</span> : <span>Search</span>}
+            {/* {loading ? <span>Loading...</span> : <span>Search</span>} */}
+            <span>Search</span>
           </Button>
         </div>
       </div>
+      {downloads ? (
+        <button
+          className="text-[14px] mt-2 hover:underline hover:text-gray-600"
+          onClick={handleSearch}
+        >
+          Search Results
+        </button>
+      ) : (
+        <button
+          className="text-[14px] mt-2 hover:underline hover:text-gray-600"
+          onClick={handleDownloads}
+        >
+          See Downloads
+        </button>
+      )}
       <section className="mt-8 pb-16" aria-labelledby="gallery-heading">
         <h2 id="gallery-heading" className="sr-only">
           Recently viewed
         </h2>
-        {loading ? (
-          <span>Loading...</span>
+        {downloads ? (
+          <>
+            {loading ? <span>Loading...</span> : <Downloads images={images} />}
+          </>
         ) : (
           <>
-            {images.length ? (
-              <ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                {images.map((image) => (
-                  <li key={image.links[0].href} className="relative w-44 h-36">
-                    <ImageCard imageName={image.links[0].href} />
-                  </li>
-                ))}
-              </ul>
+            {loading ? (
+              <span>Loading...</span>
             ) : (
-              <p className="text-[14px]">
-                Oops NASA no such images at the moment.
-              </p>
+              <>
+                {images.length ? (
+                  <SearchResults images={images} />
+                ) : (
+                  <p className="text-[14px]">
+                    Oops NASA no such images at the moment.
+                  </p>
+                )}
+              </>
             )}
           </>
         )}
