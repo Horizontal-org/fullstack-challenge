@@ -55,7 +55,6 @@ function App() {
         </div>
         <div className="w-full mt-2 lg:w-3/12 lg:ml-4 lg:mt-0">
           <Button onClick={handleSearch}>
-            {/* {loading ? <span>Loading...</span> : <span>Search</span>} */}
             <span>Search</span>
           </Button>
         </div>
