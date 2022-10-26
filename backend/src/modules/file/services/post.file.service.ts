@@ -7,11 +7,12 @@ import { FileEntity } from '../domain/file.entity';
 export class PostFileService {
   constructor(
     @InjectRepository(FileEntity)
-    private fileRepository: Repository<FileEntity>,
+    private readonly fileRepository: Repository<FileEntity>,
   ) {}
 
-  async create(body: any) {
-    // const createdAt = new Date(÷
+  async create(body: FileEntity) {
+    const createdAt = new Date();
+    body.createdAt = createdAt;
     return await this.fileRepository.save(body);
   }
 }
