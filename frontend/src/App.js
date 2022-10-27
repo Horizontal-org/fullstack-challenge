@@ -52,7 +52,6 @@ function App() {
   }
 
   useEffect(() => {
-    setLoading(true);
     async function fetchNasaImages() {
       const response = await fetch(
         `https://images-api.nasa.gov/search?q=space&description=moon&media_type=image`
@@ -61,8 +60,10 @@ function App() {
       setImages(data.collection.items.slice(0, 25));
     }
     setLoading(true);
-    fetchNasaImages();
-    setLoading(false);
+    setTimeout(() => {
+      fetchNasaImages();
+      setLoading(false);
+    }, 5000);
   }, []);
 
   return (
@@ -100,26 +101,13 @@ function App() {
         <h2 id="gallery-heading" className="sr-only">
           Recently viewed
         </h2>
-        {downloads ? (
-          <>
-            {loading ? <span>Loading...</span> : <Downloads images={images} />}
-          </>
-        ) : (
-          <>
-            {loading ? (
-              <span>Loading...</span>
-            ) : (
-              <>
-                {images.length ? (
-                  <SearchResults images={images} saveImage={handleSaveImage} />
-                ) : (
-                  <p className="text-[14px]">
-                    Oops NASA no such images at the moment.
-                  </p>
-                )}
-              </>
-            )}
-          </>
+        {loading && <p className="text-[14px] animate-pulse">Loading ...</p>}
+        {!loading && downloads && <Downloads images={images} />}
+        {!loading && !downloads && (
+          <SearchResults images={images} saveImage={handleSaveImage} />
+        )}
+        {!loading && images.length === 0 && (
+          <p className="text-[14px]">Oops NASA no such images at the moment.</p>
         )}
       </section>
     </div>
