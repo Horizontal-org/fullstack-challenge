@@ -29,6 +29,28 @@ function App() {
     setLoading(false);
   }
 
+  async function handleSaveImage(image) {
+    try {
+      const response = await fetch(
+        `http://localhost:9000/file/save?image=${image}`
+      );
+      if (response.status === 200) {
+        const data = await response.json();
+        const { imageURL } = data;
+        const res = await fetch(`http://localhost:9000/file`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: imageURL }),
+        });
+        return res;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     setLoading(true);
     async function fetchNasaImages() {
@@ -89,7 +111,7 @@ function App() {
             ) : (
               <>
                 {images.length ? (
-                  <SearchResults images={images} />
+                  <SearchResults images={images} saveImage={handleSaveImage} />
                 ) : (
                   <p className="text-[14px]">
                     Oops NASA no such images at the moment.
