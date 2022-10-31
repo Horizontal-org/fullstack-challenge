@@ -1,13 +1,13 @@
-
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { ListFileController } from './controllers/list.file.controller';
+import { FileController } from './controllers/file.controller';
+import { FileService } from './services/file.service';
 import { FileEntity } from './domain/file.entity';
 
 @Module({
-  controllers: [ListFileController],
-  imports: [TypeOrmModule.forFeature([FileEntity])]
+  controllers: [FileController],
+  providers: [FileService],
+  imports: [TypeOrmModule.forFeature([FileEntity])],
 })
-
 export class FileModule {}

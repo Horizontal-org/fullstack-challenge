@@ -1,5 +1,3 @@
-import { ListFileController } from './list.file.controller';
+import { FileController } from './file.controller';
 
-export const fileControllers = [
-  ListFileController
-];
+export const fileControllers = [FileController];
